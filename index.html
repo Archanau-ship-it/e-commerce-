@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trusty - Online Shopping Site</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>Trusty</h1>
+                <span class="explore">Explore <span class="plus">Plus</span> <i class="fa-solid fa-star"></i></span>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products, brands and more">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <div class="header-actions">
+                <!-- Analytics button removed per request -->
+                <div class="cart-btn" id="cart-toggle-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Cart</span>
+                    <span class="badge" id="cart-badge">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Categories Strip -->
+    <nav class="categories">
+        <div class="cat-item">
+            <img src="https://img.icons8.com/color/128/000000/discount.png" alt="Top Offers">
+            <span>Top Offers</span>
+        </div>
+        <div class="cat-item">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/128/128/image/e2268d56d09df684.png?q=100"
+                alt="Mobiles & Tablets">
+            <span>Mobiles & Tablets</span>
+        </div>
+        <div class="cat-item">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/128/128/image/6e3e1efa83bc56c3.png?q=100"
+                alt="Electronics">
+            <span>Electronics</span>
+        </div>
+        <div class="cat-item">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/128/128/image/b3e1225e6bda1c9e.png?q=100"
+                alt="TVs & Appliances">
+            <span>TVs & Appliances</span>
+        </div>
+        <div class="cat-item">
+            <img src="https://img.icons8.com/color/128/000000/t-shirt.png" alt="Fashion">
+            <span>Fashion</span>
+        </div>
+        <div class="cat-item">
+            <img src="https://img.icons8.com/color/128/000000/cosmetic-brush.png" alt="Beauty">
+            <span>Beauty</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Promotional Banner -->
+        <div class="banner">
+            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1600&h=270&q=80"
+                alt="Sale Banner">
+        </div>
+
+        <!-- Horizontal Product Section: Best Deals -->
+        <section class="product-section">
+            <div class="section-header">
+                <h2>Best of Electronics</h2>
+                <button class="view-all-btn"><i class="fa-solid fa-circle-chevron-right"></i></button>
+            </div>
+            <div class="product-carousel" id="electronics-deals">
+                <!-- Products dynamically injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Horizontal Product Section: Top Quality Products -->
+        <section class="product-section mt-15">
+            <div class="section-header">
+                <h2>Trending Deals</h2>
+                <button class="view-all-btn"><i class="fa-solid fa-circle-chevron-right"></i></button>
+            </div>
+            <div class="product-carousel" id="trending-deals">
+                <!-- Products dynamically injected via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Overlay & Sidebar -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>My Cart (<span id="cart-count-title">0</span> items)</h3>
+            <button class="close-cart" id="close-cart-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="cart-items" id="cart-items-container">
+            <!-- Cart items dynamically injected via JS -->
+            <div class="empty-cart" id="empty-cart-message">
+                <img src="https://rukminim2.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90"
+                    alt="Empty Cart">
+                <p>Your cart is empty!</p>
+                <span>Add items to it now.</span>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="price-details">
+                <p>Total Amount: <strong id="cart-total-price">₹0</strong></p>
+            </div>
+            <button class="place-order-btn">PLACE ORDER</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Item added to cart!</div>
+
+    <!-- Product Details Modal -->
+    <div class="cart-overlay" id="product-details-overlay" onclick="closeProductDetails()"></div>
+    <div class="product-modal" id="product-details-modal">
+        <div class="modal-header">
+            <h3>Product Details</h3>
+            <button class="close-modal" onclick="closeProductDetails()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-content" id="product-details-content">
+            <!-- Details dynamically injected here -->
+        </div>
+    </div>
+
+    <!-- Analytics Modal -->
+    <div class="cart-overlay" id="analytics-overlay" onclick="closeAnalytics()"></div>
+    <div class="analytics-modal" id="analytics-modal">
+        <div class="cart-header">
+            <h3>HappyTrack Analytics</h3>
+            <button class="close-cart" onclick="closeAnalytics()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="analytics-content">
+            <div class="summary-cards">
+                <div class="card">
+                    <h4>Total Users</h4>
+                    <div class="value" id="val-users">0</div>
+                </div>
+                <div class="card">
+                    <h4>High Intent</h4>
+                    <div class="value" id="val-intent">0</div>
+                </div>
+                <div class="card">
+                    <h4>Abandoners</h4>
+                    <div class="value" id="val-abandoners">0</div>
+                </div>
+            </div>
+            <div class="dashboard-container">
+                <h4 style="text-align: center;">Most Viewed Products</h4>
+                <canvas id="productChart"></canvas>
+            </div>
+            <button class="place-order-btn" style="width: 100%; margin-top: 15px;" onclick="fetchAnalytics()">Refresh
+                Data</button>
+            <p id="error-msg" style="color:red; display:none; text-align:center; margin-top:10px;">API Error. Make sure
+                node server.js is running.</p>
+        </div>
+    </div>
+
+    <script src="tracker.js"></script>
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
